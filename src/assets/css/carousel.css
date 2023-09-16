@@ -1,0 +1,11 @@
+img {
+    max-width: 85vw;
+    margin: auto;
+    height: 30rem;
+}
+
+#carouselExampleIndicators {
+    width: 85vw;
+    margin: auto;
+    margin-top: 2vw;
+}

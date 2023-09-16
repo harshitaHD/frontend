@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Batman",
+        "link": "../assets/images/batman.jpg"
+    },
+    {
+        "id": 2,
+        "name": "IronMan",
+        "link": "../assets/images/iron_man.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Asura",
+        "link": "../assets/images/ohma_tokita.jpg"
+    }
+]
