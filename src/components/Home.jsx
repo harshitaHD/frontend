@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div>
       <div className="container-fluid">
-        <Navbar size={cart.length} setShow={setShow} />
+        <Navbar />
         {show ? (
           <Product handleClick={handleClick} />
         ) : (

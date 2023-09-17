@@ -14,8 +14,8 @@ const Cards = ({ item }) => {
     setShowProductPage(false);
   };
   useEffect(() => {
-    localStorage.setItem("numItem", 0);
-  })
+    localStorage.setItem("numItem", parseInt(0));
+  });
 
   const addToCart = () => {
     // Get the current cart items from local storage (if any)
@@ -26,7 +26,7 @@ const Cards = ({ item }) => {
     if (itemExists) {
       const updatedCartItems = existingCartItems.map((cartItem) => {
         if (cartItem.id === id) {
-          localStorage['numItem'] = parseInt(localStorage['numItem']) + 1
+          localStorage["numItem"] = parseInt(localStorage["numItem"]) + 1;
           return { ...cartItem, quantity: cartItem.quantity + 1 };
         }
         return cartItem;
@@ -39,7 +39,6 @@ const Cards = ({ item }) => {
 
       localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     }
-    alert(`${name} has been added to your cart.`);
   };
 
   return (

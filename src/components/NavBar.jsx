@@ -3,22 +3,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  // Initialize the size state with 0
-  const [size, setSize] = useState(0);
-  const [numItem, setNumItem] = useState(localStorage.getItem('numItem'))
-
-  // Function to get the cart data from local storage and calculate the size
+  // Initialize the unique item IDs and their count
+  const [itemCounts, setItemCounts] = useState({});
+  // const [numItems, setNumItems] = useState(0);
+  // Function to get the cart data from local storage and calculate item counts
   const updateCartSize = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const newSize = cart.reduce((total, item) => total + item.amount, 0);
-    setSize(newSize);
+    const itemIds = cart.map((item) => item.id);
+    // Calculate item counts using reduce and object assignment
+    const counts = itemIds.reduce((acc, id) => {
+      acc[id] = (acc[id] || 0) + 1;
+      return acc;
+    }, {});
+
+    setItemCounts(counts);
   };
 
-  // Use useEffect to update the cart size when the component mounts
+  // Use useEffect to update the item counts when the component mounts
   useEffect(() => {
     updateCartSize();
   }, []);
 
+  const totalItemCount = Object.keys(itemCounts).length;
   return (
     <>
       <nav
@@ -26,7 +32,7 @@ const Navbar = () => {
         style={{ maxWidth: "100vw" }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="/home">
+          <a className="navbar-brand" href="/">
             <h2>Ink & Quill</h2>
           </a>
           <button
@@ -52,7 +58,8 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
-                  Cart ({numItem})
+                Cart ({totalItemCount})
+                  {/*Object.keys(itemCounts).length;*/}
                 </Link>
               </li>
               <li className="nav-item">

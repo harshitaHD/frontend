@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./NavBar";
 
-const Cart = ({ handleChange }) => {
+const Cart = () => {
   const [cart, setCart] = useState([]);
   const [price, setPrice] = useState(0);
 
@@ -21,20 +21,19 @@ const Cart = ({ handleChange }) => {
     saveCartToLocalStorage(updatedCart);
   };
 
-  const calculateTotalPrice = () => {
+  // Calculate the total price whenever the cart changes
+  useEffect(() => {
     let totalPrice = 0;
     cart.forEach((item) => {
       totalPrice += item.amount * item.price;
     });
-    return totalPrice;
-  };
 
-  useEffect(() => {
-    const totalPrice = calculateTotalPrice();
+    // Round the total price to 2 decimal places
+    totalPrice = parseFloat(totalPrice.toFixed(2));
+
     setPrice(totalPrice);
     saveCartToLocalStorage(cart);
   }, [cart]);
-
 
   return (
     <div className="container-fluid">
@@ -63,23 +62,6 @@ const Cart = ({ handleChange }) => {
                 <div className="card-body">
                   <h5 className="card-title">{item.name}</h5>
                   <p className="card-text">Rs. {item.price}</p>
-                  <div className="btn-group">
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={() => handleChange(item, 1)}
-                    >
-                      +
-                    </button>
-                    <button className="btn btn-light">{item.amount}</button>
-                    <button
-                      type="button"
-                      className="btn btn-info"
-                      onClick={() => handleChange(item, -1)}
-                    >
-                      -
-                    </button>
-                  </div>
                   <button
                     type="button"
                     className="btn btn-danger mt-2"
