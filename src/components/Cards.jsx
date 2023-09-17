@@ -13,9 +13,6 @@ const Cards = ({ item }) => {
   const handleCloseProductPage = () => {
     setShowProductPage(false);
   };
-  useEffect(() => {
-    localStorage.setItem("numItem", parseInt(0));
-  });
 
   const addToCart = () => {
     // Get the current cart items from local storage (if any)
@@ -40,6 +37,10 @@ const Cards = ({ item }) => {
       localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("numItem", parseInt(0));
+  }, []);
 
   return (
     <div className="card m-3" style={{ minWidth: "20rem", maxWidth: "20rem" }}>

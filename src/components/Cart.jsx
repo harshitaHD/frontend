@@ -21,14 +21,20 @@ const Cart = () => {
     saveCartToLocalStorage(updatedCart);
   };
 
-  // Calculate the total price whenever the cart changes
   useEffect(() => {
     let totalPrice = 0;
     cart.forEach((item) => {
-      totalPrice += item.amount * item.price;
-    });
+      const itemQuantity = parseFloat(item.quantity);
+      const itemPrice = parseFloat(item.price);
 
-    // Round the total price to 2 decimal places
+      // Check if itemQuantity and itemPrice are valid numbers
+      if (!isNaN(itemQuantity) && !isNaN(itemPrice)) {
+        totalPrice += itemQuantity * itemPrice;
+      } else {
+        //missing or invalid data (e.g., log an error)
+        console.error(`Invalid data for item: ${JSON.stringify(item)}`);
+      }
+    });
     totalPrice = parseFloat(totalPrice.toFixed(2));
 
     setPrice(totalPrice);
@@ -39,10 +45,12 @@ const Cart = () => {
     <div className="container-fluid">
       <Navbar />
       <article>
-        <div className="total">
-          <h4>
-            <span>Total Rs - {price}</span>
-          </h4>
+        <div className="d-flex justify-content-center mt-4">
+          <div className="total">
+            <h3 style={{ fontWeight: "bold", color: "green" }}>
+              <span>Total Payable Amount ₹{price}</span>
+            </h3>
+          </div>
         </div>
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           {cart.map((item) => (
