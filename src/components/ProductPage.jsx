@@ -3,7 +3,7 @@ import "../App.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProductPage = ({ product, handleClose }) => {
-  const { name, description, price, image } = product;
+  const { name, description, price, image, usage } = product;
 
   return (
     <div className="product-page">
@@ -13,6 +13,7 @@ const ProductPage = ({ product, handleClose }) => {
           <h2>{name}</h2>
           <p>{description}</p>
           <p>Price: {price} Rs</p>
+          <p>{usage}</p>
         </div>
         <button
           type="button"
