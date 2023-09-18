@@ -67,11 +67,11 @@ const Cart = () => {
         <div className="d-flex justify-content-center mt-4">
           <div className="total">
             <h3 style={{ fontWeight: "bold", color: "green" }}>
-              <span>Total Payable Amount ₹{price}</span>
+              <span>Total Payable Amount ₹{price}/-</span>
             </h3>
           </div>
         </div>
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div className="row row-cols-0 row-cols-md-1 row-cols-lg-4">
           {cart.map((item) => (
             <div className="col mb-4" key={item.id}>
               <div className="card">
@@ -88,7 +88,16 @@ const Cart = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{item.name}</h5>
-                  <p className="card-text">Rs. {item.price}</p>
+                  <p
+                    className="card-text"
+                    style={{
+                      color: "green",
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                    }}
+                  >
+                    ₹{item.price}/-
+                  </p>
                   <div className="quantity-controls">
                     <button
                       type="button"
