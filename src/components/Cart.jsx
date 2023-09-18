@@ -21,13 +21,32 @@ const Cart = () => {
     saveCartToLocalStorage(updatedCart);
   };
 
+  const handleQuantityChange = (id, newQuantity) => {
+    if (newQuantity > 0) {
+      const updatedCart = cart.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      });
+
+      setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
+    } else {
+      // Remove the item from the cart if quantity is 0
+      const updatedCart = cart.filter((item) => item.id !== id);
+      setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
+    }
+  };
+
   useEffect(() => {
     let totalPrice = 0;
     cart.forEach((item) => {
       const itemQuantity = parseFloat(item.quantity);
       const itemPrice = parseFloat(item.price);
 
-      // Check if itemQuantity and itemPrice are valid numbers
+      //if itemQuantity and itemPrice are valid numbers
       if (!isNaN(itemQuantity) && !isNaN(itemPrice)) {
         totalPrice += itemQuantity * itemPrice;
       } else {
@@ -70,6 +89,29 @@ const Cart = () => {
                 <div className="card-body">
                   <h5 className="card-title">{item.name}</h5>
                   <p className="card-text">Rs. {item.price}</p>
+                  <div className="quantity-controls">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      style={{ fontWeight: "bold" }}
+                      onClick={() =>
+                        handleQuantityChange(item.id, item.quantity - 1)
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="quantity">{item.quantity}</span>
+                    <button
+                      type="button"
+                      className="btn btn-info"
+                      style={{ fontWeight: "bold" }}
+                      onClick={() =>
+                        handleQuantityChange(item.id, item.quantity + 1)
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
                     type="button"
                     className="btn btn-danger mt-2"
