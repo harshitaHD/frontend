@@ -102,18 +102,34 @@ const Cart = () => {
                     <button
                       type="button"
                       className="btn btn-danger"
-                      style={{ fontWeight: "bold" }}
+                      style={{
+                        fontWeight: "bolder",
+                        border: "1px solid black",
+                      }}
                       onClick={() =>
                         handleQuantityChange(item.id, item.quantity - 1)
                       }
                     >
                       -
                     </button>
-                    <span className="quantity">{item.quantity}</span>
+                    <button
+                      className="btn btn-light"
+                      style={{
+                        border: "1px solid black",
+                        margin: "2px",
+                        pointerEvents: "none",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {item.quantity}
+                    </button>
                     <button
                       type="button"
                       className="btn btn-info"
-                      style={{ fontWeight: "bold" }}
+                      style={{
+                        fontWeight: "bolder",
+                        border: "1px solid black",
+                      }}
                       onClick={() =>
                         handleQuantityChange(item.id, item.quantity + 1)
                       }
