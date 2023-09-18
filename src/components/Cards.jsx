@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProductPage from "./ProductPage";
-import Navbar from "./NavBar";
+// import Navbar from "./NavBar";
 
 const Cards = ({ item }) => {
   const { id, name, description, price, image } = item;
   const [showProductPage, setShowProductPage] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const handleImageClick = () => {
     setShowProductPage(true);
@@ -16,9 +17,7 @@ const Cards = ({ item }) => {
   };
 
   const addToCart = () => {
-    // Get the current cart items from local storage (if any)
     const existingCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
     const itemExists = existingCartItems.some((cartItem) => cartItem.id === id);
 
     if (itemExists) {
@@ -41,6 +40,12 @@ const Cards = ({ item }) => {
 
       localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     }
+
+    // changing color
+    setAddedToCart(true);
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -69,8 +74,13 @@ const Cards = ({ item }) => {
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{description}</p>
           <p className="card-text">Price - {price} Rs</p>
-          <button type="button" className="btn btn-danger" onClick={addToCart}>
-            Add to Cart
+          <button
+            type="button"
+            className={`btn ${addedToCart ? "btn-success" : "btn-danger"}`}
+            onClick={addToCart}
+            disabled={addedToCart}
+          >
+            {addedToCart ? "Added to Cart" : "Add to Cart"}
           </button>
         </div>
         {showProductPage && (
