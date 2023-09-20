@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProductPage from "./ProductPage";
-// import Navbar from "./NavBar";
 
 const Cards = ({ item }) => {
   const { id, name, description, price, image } = item;
@@ -16,6 +15,12 @@ const Cards = ({ item }) => {
     setShowProductPage(false);
   };
 
+  const updateNavBarCartInfo = () => {
+    let cartInfo = document.getElementById('itemCount');
+    console.log(localStorage.getItem('numItem'))
+    cartInfo.textContent = "Cart (" + localStorage.getItem('numItem') + ")"
+  }
+
   const addToCart = () => {
     const existingCartItems = JSON.parse(localStorage.getItem("cart")) || [];
     const itemExists = existingCartItems.some((cartItem) => cartItem.id === id);
@@ -23,11 +28,6 @@ const Cards = ({ item }) => {
     if (itemExists) {
       const updatedCartItems = existingCartItems.map((cartItem) => {
         if (cartItem.id === id) {
-          localStorage.setItem(
-            "numItem",
-            parseInt(localStorage.getItem("numItem")) + 1
-          );
-          setItem(parseInt(localStorage.getItem("numItem")));
           return { ...cartItem, quantity: cartItem.quantity + 1 };
         }
         return cartItem;
@@ -39,18 +39,15 @@ const Cards = ({ item }) => {
       const updatedCartItems = [...existingCartItems, newItem];
 
       localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+      localStorage.setItem("numItem", parseInt(localStorage.getItem("numItem")) + 1)
+      updateNavBarCartInfo();
     }
-
     // changing color
     setAddedToCart(true);
     setTimeout(() => {
       setAddedToCart(false);
     }, 2000);
   };
-
-  useEffect(() => {
-    localStorage.setItem("numItem", parseInt(0));
-  }, []);
 
   return (
     <>

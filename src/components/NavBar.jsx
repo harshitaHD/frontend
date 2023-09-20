@@ -5,15 +5,12 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   // Initialize the unique item IDs and their count
   const [itemCounts, setItemCounts] = useState({});
-  const [numItems, setNumItems] = useState(Number(localStorage.getItem('numItem')) || 0);
+  const [numItem, setNumItem] = useState(0)
 
   // Function to get the cart data from local storage and calculate item counts
   const updateCartSize = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const itemIds = cart.map((item) => item.id);
-    const jsonArray = JSON.parse(localStorage.getItem("cart"));
-    setNumItems(jsonArray.length)
-    localStorage.setItem("numItem", jsonArray.length)
     // Calculate item counts using reduce and object assignment
     const counts = itemIds.reduce((acc, id) => {
       acc[id] = (acc[id] || 0) + 1;
@@ -26,7 +23,8 @@ const Navbar = () => {
   // Use useEffect to update the item counts when the component mounts
   useEffect(() => {
     updateCartSize();
-  }, [localStorage.getItem('cart')]);
+    setNumItem(localStorage.getItem('numItem'))
+  }, [localStorage.getItem('cart'), localStorage.getItem('numItem')]);
 
   return (
     <>
@@ -60,8 +58,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  Cart ({numItems})
+                <Link className="nav-link" id="itemCount" to="/cart">
+                  Cart ({numItem})
                 </Link>
               </li>
               <li className="nav-item">

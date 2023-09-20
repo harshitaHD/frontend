@@ -15,10 +15,20 @@ const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(cartData));
   };
 
+  const updateNavBarCartInfo = () => {
+    let cartInfo = document.getElementById('itemCount');
+    console.log(localStorage.getItem('numItem'))
+    cartInfo.textContent = "Cart (" + localStorage.getItem('numItem') + ")"
+  }
+
   const handleRemove = (id) => {
     const updatedCart = cart.filter((item) => item.id !== id);
     setCart(updatedCart);
+    if (localStorage.getItem("numItem") > 0) {
+      localStorage.setItem("numItem", parseInt(localStorage.getItem('numItem')) - 1)
+    }
     saveCartToLocalStorage(updatedCart);
+    updateNavBarCartInfo()
   };
 
   const handleQuantityChange = (id, newQuantity) => {
